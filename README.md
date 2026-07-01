@@ -34,7 +34,7 @@ pip install aa-healthcheck
 
 Configure your Auth settings (`local.py`) as follows:
 
-- Add `'healthchek'` to `INSTALLED_APPS`
+- Add `'healthcheck'` to `INSTALLED_APPS`
 - Add the following lines to your settings file:
 
 ```python
