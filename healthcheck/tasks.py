@@ -12,12 +12,13 @@ from .app_settings import HEALTHCHECK_URL
 logger = get_extension_logger(__name__)
 
 
-@shared_task(bind=True)
-def heartbeat(self):
+@shared_task
+def heartbeat():
+    if not HEALTHCHECK_URL:
+        logger.debug("HEALTHCHECK_URL is not set. Skipping heartbeat.")
+        return
+
     try:
-        requests.get(f"{HEALTHCHECK_URL}/start", timeout=10)
-        # ping /start first — if the worker is stuck and never
-        # gets here, healthchecks.io flags it as overdue
         requests.get(HEALTHCHECK_URL, timeout=10)
-    except requests.RequestException as e:
-        logger.warning(f"Healthchecks.io ping failed: {e}")
+    except requests.RequestException:
+        logger.warning("Healthchecks.io ping failed", exc_info=True)

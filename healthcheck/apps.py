@@ -8,7 +8,7 @@ from django.utils.text import format_lazy
 from healthcheck import __title_translated__, __version__
 
 
-class ExampleConfig(AppConfig):
+class HealthCheckConfig(AppConfig):
     """App config"""
 
     name = "healthcheck"
